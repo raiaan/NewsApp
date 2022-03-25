@@ -73,7 +73,6 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.7'
     //kotlin worker and corrutine
     implementation("androidx.work:work-runtime-ktx:2.7.1")
-    //picaso
-    implementation 'com.squareup.picasso:picasso:2.71828'
+
 
 }

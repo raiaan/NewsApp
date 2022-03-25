@@ -7,9 +7,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
+import com.bumptech.glide.Glide
 import com.example.myapplication.data.models.Articles
 import com.example.myapplication.databinding.FragmentDetailsBinding
-//import com.squareup.picasso.Picasso
+
 
 class DetailsFragment : Fragment() {
     private lateinit var detailsViewModel: DetailsViewModel
@@ -50,8 +51,10 @@ class DetailsFragment : Fragment() {
             //binding.sourceNameTxt.text = article!!.source?.name
             binding.titleTxt.text = article!!.title
             binding.descriptionTxt.text = article!!.description
-//            Picasso.get().load(article!!.urlToImage)
-//                .into(binding.img)
+
+            Glide.with(requireContext())
+                .load(article!!.urlToImage)
+                .into(binding.img)
             binding.backToNews.setOnClickListener({
                 detailsViewModel.navToHome()
             })
