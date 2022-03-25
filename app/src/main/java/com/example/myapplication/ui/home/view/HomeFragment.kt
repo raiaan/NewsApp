@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
+import com.example.myapplication.R
 import com.example.myapplication.data.models.Articles
 import com.example.myapplication.data.models.Repository
 import com.example.myapplication.databinding.FragmentHomeBinding
@@ -19,7 +21,12 @@ class HomeFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var  viewModel: HomeViewModel
     private lateinit var  repository:Repository
-    private val adapter = ArticleListAdapter()
+    private val ArticleDetailCallback :(it:Articles)->Unit=  {it:Articles->
+        val bundle = Bundle()
+        bundle.putSerializable("article",it)
+        Navigation.findNavController(binding.root).navigate(R.id.actionFromHomeToDetails,bundle)
+    }
+    private val adapter = ArticleListAdapter(ArticleDetailCallback)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         repository= Repository(requireContext())
@@ -34,9 +41,7 @@ class HomeFragment : Fragment() {
         viewModel.getLatestNews()
         return binding.root
     }
-    private val ArticleDetailCallback :(it:Articles)->Unit=  {it:Articles->
 
-    }
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
