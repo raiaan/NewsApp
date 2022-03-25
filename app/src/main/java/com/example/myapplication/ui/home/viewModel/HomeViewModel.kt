@@ -20,9 +20,7 @@ class HomeViewModel constructor(private val mainRepository: Repository) : ViewMo
                 if (response.isSuccessful) {
                     mutableLiveData.postValue(response.body())
                     loading.value = false
-                    Log.v("connected" , "${response.body()} ")
                 } else {
-                    Log.v("connected" , "${response.raw()} ")
                     onError("Error : ${response.headers()} ")
                 }
             }

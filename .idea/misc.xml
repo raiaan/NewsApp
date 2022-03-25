@@ -3,12 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/MG/AndroidStudioProjects/NewsApp/app/src/main/res/layout/activity_login.xml" value="0.19947916666666668" />
-        <entry key="..\:/Users/MG/AndroidStudioProjects/NewsApp/app/src/main/res/layout/activity_register.xml" value="0.18541666666666667" />
-        <entry key="..\:/Users/MG/AndroidStudioProjects/NewsApp/app/src/main/res/layout/fragment_gallery.xml" value="0.19947916666666668" />
-        <entry key="..\:/Users/MG/AndroidStudioProjects/NewsApp/app/src/main/res/layout/fragment_login.xml" value="0.19947916666666668" />
-        <entry key="..\:/Users/MG/AndroidStudioProjects/NewsApp/app/src/main/res/layout/fragment_register.xml" value="0.19947916666666668" />
+        <entry key="app/src/main/res/layout/article_item.xml" value="0.1" />
         <entry key="app/src/main/res/layout/content_main.xml" value="0.24270833333333333" />
+        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.11041666666666666" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1" />
       </map>
     </option>
   </component>
