@@ -24,7 +24,8 @@ class HomeFragment : Fragment() {
     private val ArticleDetailCallback :(it:Articles)->Unit=  {it:Articles->
         val bundle = Bundle()
         bundle.putSerializable("article",it)
-        Navigation.findNavController(binding.root).navigate(R.id.actionFromHomeToDetails,bundle)
+        Log.v("data","{$it.content}")
+        Navigation.findNavController(binding.root).navigate(R.id.action_nav_home_to_details,bundle)
     }
     private val adapter = ArticleListAdapter(ArticleDetailCallback)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,10 +39,13 @@ class HomeFragment : Fragment() {
         viewModel.mutableLiveData.observe(viewLifecycleOwner) {
             adapter.articles = it.articles
         }
-        viewModel.getLatestNews()
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewModel.getLatestNews()
+    }
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
