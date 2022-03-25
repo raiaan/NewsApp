@@ -9,6 +9,7 @@ import com.example.myapplication.data.models.User
 
 @Database(entities = [Articles::class,User::class], version =1)
     public abstract class NewsDatabase: RoomDatabase() {
+    abstract fun newsDao(): NewsDao
         companion object {
             private var INSTANCE: NewsDatabase? = null
             fun getInstance(application: Application): NewsDatabase {
