@@ -7,7 +7,7 @@ import com.bumptech.glide.Glide
 import com.example.myapplication.data.models.Articles
 import com.example.myapplication.databinding.ArticleItemBinding
 
-class ArticleListAdapter : RecyclerView.Adapter<ArticleListAdapter.ArticleViewHolder>(){
+class ArticleListAdapter (val ArticleDetailCallback :(it:Articles)->Unit): RecyclerView.Adapter<ArticleListAdapter.ArticleViewHolder>(){
     var articles =  listOf<Articles>()
         set(value) {
             field = value
@@ -25,6 +25,9 @@ class ArticleListAdapter : RecyclerView.Adapter<ArticleListAdapter.ArticleViewHo
             .into(holder.binding.mainArticleImg)
         holder.binding.mainArticleTitle.text = articles[position].title
         holder.binding.dateArticleTitle.text = articles[position].publishedAt
+        holder.binding.details.setOnClickListener {
+            ArticleDetailCallback(articles[position])
+        }
     }
 
     override fun getItemCount(): Int {

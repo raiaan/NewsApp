@@ -34,7 +34,9 @@ class HomeFragment : Fragment() {
         viewModel.getLatestNews()
         return binding.root
     }
+    private val ArticleDetailCallback :(it:Articles)->Unit=  {it:Articles->
 
+    }
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

@@ -26,6 +26,10 @@ class HomeViewModel constructor(private val mainRepository: Repository) : ViewMo
             }
         }
     }
+
+    fun cacheResult(){
+
+    }
     private val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
         onError("Exception handled: ${throwable.localizedMessage}")
     }
