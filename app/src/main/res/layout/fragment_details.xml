@@ -23,7 +23,7 @@
                     android:layout_marginTop="30dp"
                     android:layout_marginRight="8dp"
                     android:src="@drawable/ic_baseline_arrow_forward_ios_24"
-                    android:background="@color/cardview_light_background"
+                    android:background="@color/black"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 

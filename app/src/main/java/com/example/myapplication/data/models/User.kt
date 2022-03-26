@@ -3,16 +3,13 @@ package com.example.myapplication.data.models
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-@Entity (tableName = "users")
-data class User (
-    @PrimaryKey
-    @ColumnInfo(name="email")
-    val email:String,
-    @ColumnInfo(name="userName")
-    val userName:String,
-    @ColumnInfo(name="password")
-    val password:String,
-    @ColumnInfo(name="phoneNumber")
-    val phoneNumber:String
 
-        )
+@Entity(tableName = "users")
+data class User(
+    @PrimaryKey
+    val email: String,
+    val userName: String,
+    val password: String,
+    val phoneNumber: String
+
+)

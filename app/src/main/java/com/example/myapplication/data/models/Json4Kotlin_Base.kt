@@ -3,7 +3,7 @@ import com.google.gson.annotations.SerializedName
 
 data class Json4Kotlin_Base (
 
-	@SerializedName("status") val status : String,
-	@SerializedName("totalResults") val totalResults : Int,
-	@SerializedName("articles") val articles : List<Articles>
+	val status : String,
+	val totalResults : Int,
+	val articles : List<Articles>
 )
