@@ -17,6 +17,14 @@ class Repository( private val newsDao: NewsDao) {
         val retrofitService = RetrofiteService.getInstance()
         return retrofitService.allNews()
     }
+    suspend fun insertUser(user: User) {
+        return newsDao.insertUser(user)
+    }
+
+    suspend fun validateUser(userEmail: String,password:String):User?{
+
+        return newsDao.validateUser(userEmail,password)
+    }
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
     suspend fun insertToFavourite(articles: Articles) {
