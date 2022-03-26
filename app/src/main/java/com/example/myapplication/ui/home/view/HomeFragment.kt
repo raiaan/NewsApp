@@ -6,8 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
+import com.example.myapplication.NewsApplication
 import com.example.myapplication.R
 import com.example.myapplication.data.models.Articles
 import com.example.myapplication.data.models.Repository
@@ -19,8 +21,8 @@ class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
-    private lateinit var  viewModel: HomeViewModel
-    private lateinit var  repository:Repository
+    private lateinit var viewModel: HomeViewModel
+    private lateinit var viewModelFactory: HomeViewModelFactory
     private val ArticleDetailCallback :(it:Articles)->Unit=  {it:Articles->
         val bundle = Bundle()
         bundle.putSerializable("article",it)
@@ -30,8 +32,8 @@ class HomeFragment : Fragment() {
     private val adapter = ArticleListAdapter(ArticleDetailCallback)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        repository= Repository(requireContext())
-        viewModel = ViewModelProvider(this, HomeViewModelFactory(repository))[HomeViewModel::class.java]
+        viewModelFactory = HomeViewModelFactory((requireContext().applicationContext as NewsApplication).repository)
+        viewModel = ViewModelProvider(this,viewModelFactory)[HomeViewModel::class.java]
     }
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)

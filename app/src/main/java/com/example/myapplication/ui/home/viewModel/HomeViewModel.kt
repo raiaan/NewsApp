@@ -21,6 +21,7 @@ class HomeViewModel constructor(private val mainRepository: Repository) : ViewMo
                     mutableLiveData.postValue(response.body())
                     loading.value = false
                 } else {
+                    Log.v("Error","${response.errorBody()?.string()}")
                     onError("Error : ${response.headers()} ")
                 }
             }

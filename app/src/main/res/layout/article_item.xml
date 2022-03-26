@@ -2,6 +2,7 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
     android:layout_marginTop="@dimen/activity_horizontal_margin"
     android:padding="8dp">
@@ -35,6 +36,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/more"
+                style="?attr/materialButtonOutlinedStyle"
+                />
+            <Button
+                android:id="@+id/add_fav"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/addToFav"
+                app:icon="@drawable/ic_baseline_favorite_24"
                 style="?attr/materialButtonOutlinedStyle"
                 />
         </LinearLayout>
