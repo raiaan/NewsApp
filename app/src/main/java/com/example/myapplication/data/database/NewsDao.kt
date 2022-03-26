@@ -2,6 +2,7 @@ package com.example.myapplication.data.database
 
 import androidx.room.Dao
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.example.myapplication.data.models.Articles
 import com.example.myapplication.data.models.User
@@ -16,8 +17,9 @@ interface NewsDao {
     @Query("SELECT * FROM users WHERE email LIKE :email AND password LIKE:password")
     suspend fun validateUser(email: String,password:String): User?
     @Query("SELECT * FROM articles ORDER BY publishedAt ASC")
-    fun getCachedArticles(): Flow<List<Articles>>
-    @Insert
-    fun addArticle(article:Articles)
+    fun getCachedArticles(): List<Articles>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun addArticle(article: Articles)
 
 }
