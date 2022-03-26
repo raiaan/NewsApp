@@ -8,7 +8,7 @@ import androidx.room.RoomDatabase
 import com.example.myapplication.data.models.Articles
 import com.example.myapplication.data.models.User
 
-@Database(entities = [Articles::class,User::class], version =1)
+@Database(entities = [Articles::class,User::class], version =2)
 abstract class NewsDatabase: RoomDatabase() {
     abstract fun newsDao(): NewsDao
         companion object {
