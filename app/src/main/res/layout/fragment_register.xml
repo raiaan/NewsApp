@@ -5,6 +5,17 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".ui.register.Register">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="user name"
+        android:layout_margin="10dp"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:id="@+id/userNameEdite"
+        android:hint="enter userName"/>
 <TextView
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
@@ -13,6 +24,7 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/emailEdite"
         android:layout_margin="10dp"
         android:hint="enter email"/>
     <TextView
@@ -24,6 +36,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
+        android:id="@+id/phoneNumberEdite"
         android:hint="enter phone number"/>
 
     <TextView
@@ -35,11 +48,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
+        android:id="@+id/passwordEdite"
         android:hint="enter password"/>
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Register"
+        android:id="@+id/register"
         android:layout_gravity="center"/>
     <LinearLayout
         android:layout_width="wrap_content"
@@ -50,10 +65,10 @@
        android:layout_width="wrap_content"
        android:layout_height="wrap_content"
        android:text="Already Have account?"/>
-        <Button
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/Widget.AppCompat.Button.Borderless"
+            android:id="@+id/loginreg"
             android:text="Login"/>
     </LinearLayout>
 </LinearLayout>

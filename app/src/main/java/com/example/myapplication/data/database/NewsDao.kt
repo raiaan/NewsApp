@@ -7,9 +7,9 @@ import com.example.myapplication.data.models.User
 
 interface NewsDao {
     @Insert
-    suspend fun insert(register: User)
+    suspend fun insertUser(register: User)
 
 
-    @Query("SELECT * FROM users WHERE userName LIKE :userName")
-    suspend fun getUsername(userName: String): User?
+    @Query("SELECT * FROM users WHERE email LIKE :email")
+    suspend fun getUserEmail(email: String): User?
 }

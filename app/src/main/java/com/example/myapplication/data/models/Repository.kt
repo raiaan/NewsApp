@@ -12,12 +12,12 @@ class Repository( private val context: Context, val dao: NewsDao) {
         val retrofitService = RetrofiteService.getInstance()
         return retrofitService.allNews()
     }
-    suspend fun insert(user: User) {
-        return dao.insert(user)
+    suspend fun insertUser(user: User) {
+        return dao.insertUser(user)
     }
 
-    suspend fun getUserName(userName: String):User?{
+    suspend fun getUseremail(userEmail: String):User?{
 
-        return dao.getUsername(userName)
+        return dao.getUserEmail(userEmail)
     }
 }

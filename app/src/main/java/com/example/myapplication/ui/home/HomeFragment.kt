@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.example.myapplication.NewsApplication
 import com.example.myapplication.data.models.Repository
 import com.example.myapplication.databinding.FragmentHomeBinding
 import com.example.myapplication.ui.home.viewModel.HomeViewModel
@@ -21,7 +22,7 @@ class HomeFragment : Fragment() {
     private lateinit var  repository:Repository
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        repository= Repository(requireContext())
+        repository= ((requireContext().applicationContext as NewsApplication).repository)
         viewModel = ViewModelProvider(this, HomeViewModelFactory(repository))[HomeViewModel::class.java]
     }
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
