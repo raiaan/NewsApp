@@ -17,4 +17,6 @@
     <string name="login">تسجيل دخول</string>
     <string name="register">انشاء حساب</string>
     <string name="no_data_exist">Sorry  something went  wrong while fetching data</string>
+    <string name="menu_details">التفاصيل</string>
+
 </resources>
