@@ -27,8 +27,13 @@ class DetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        article = requireArguments().getSerializable("article") as Articles
         init()
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        article = arguments?.let { it.getSerializable("article") as Articles }
+
     }
     private fun init() {
         observeToHome()

@@ -7,7 +7,7 @@ import com.bumptech.glide.Glide
 import com.example.myapplication.data.models.Articles
 import com.example.myapplication.databinding.ArticleItemBinding
 
-class ArticleListAdapter (val ArticleDetailCallback :(it:Articles)->Unit): RecyclerView.Adapter<ArticleListAdapter.ArticleViewHolder>(){
+class ArticleListAdapter (val ArticleDetailCallback :(it:Articles)->Unit, val AddItemToFavourite :(it:Articles)->Unit): RecyclerView.Adapter<ArticleListAdapter.ArticleViewHolder>(){
     var articles =  listOf<Articles>()
         set(value) {
             field = value
@@ -27,6 +27,9 @@ class ArticleListAdapter (val ArticleDetailCallback :(it:Articles)->Unit): Recyc
         holder.binding.dateArticleTitle.text = articles[position].publishedAt
         holder.binding.details.setOnClickListener {
             ArticleDetailCallback(articles[position])
+        }
+        holder.binding.addFav.setOnClickListener {
+            AddItemToFavourite(articles[position])
         }
     }
 

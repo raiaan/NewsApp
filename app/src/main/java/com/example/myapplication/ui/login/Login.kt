@@ -1,60 +1,126 @@
 package com.example.myapplication.ui.login
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.myapplication.R
+import android.widget.Button
+import android.widget.EditText
+import android.widget.TextView
+import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
+import com.example.myapplication.*
+import com.example.myapplication.ui.register.RegisterViewModelFactory
+import com.example.mydatabaseapp.register.LoginViewModel
+import com.example.mydatabaseapp.register.RegisterViewModel
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [Login.newInstance] factory method to
- * create an instance of this fragment.
- */
 class Login : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    lateinit var emailEditText: EditText
+    lateinit var passwordEditText: EditText
+    lateinit var login: Button
+    lateinit var register: TextView
+
+    lateinit var email: String
+    lateinit var password:String
+    lateinit var loginViewModel: LoginViewModel
+    lateinit var loginViewModelFactory: LoginViewModelFactory
+    lateinit var sharedPreferences: SharedPreferences
+    lateinit var editor: SharedPreferences.Editor
+    var emptyData:Boolean=true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_login, container, false)
+        var view=inflater.inflate(R.layout.fragment_login,container,false)
+        loginViewModelFactory =
+            LoginViewModelFactory((requireActivity().application!! as NewsApplication).repository)
+        loginViewModel =
+            ViewModelProvider(this, loginViewModelFactory).get(LoginViewModel::class.java)
+        return view
+    }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        emailEditText=view.findViewById(R.id.emailLogin)
+        register=view.findViewById(R.id.reg)
+        login=view.findViewById(R.id.login)
+        passwordEditText=view.findViewById(R.id.passwordLogin)
+        sharedPreferences=requireActivity().getSharedPreferences("login", Context.MODE_PRIVATE)
+        editor=sharedPreferences.edit()
+       login.setOnClickListener {
+           Log.i("login","loginButton")
+            login()
+        }
+        register.setOnClickListener {
+            Navigation.findNavController(requireView()).navigate(R.id.action_login2_to_register2)
+        }
+    }
+    private fun getDate(){
+        email=emailEditText.text.toString().trim()
+        password=passwordEditText.text.toString().trim()
+    }
+    private fun checkEmptyData():Boolean{
+        if(email.isNullOrEmpty()){
+            emailEditText.error="please fill the field"
+        }
+       else if(password.isNullOrEmpty()){
+            passwordEditText.error="please fill the field"
+        }
+
+        else{
+            emptyData=false
+        }
+        return  emptyData
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment Login.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            Login().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    private fun validateData():Boolean{
+
+        if(!validateEmail(email)){
+            emailEditText.error="invalid email"
+         return false
+        }
+        else if(!validatePassword(password)){
+            passwordEditText.error="invalid password"
+            return false
+
+        }
+
+        return true
+    }
+    private fun login() {
+        getDate()
+        Log.i("login","savedata")
+        if (!checkEmptyData()) {
+            Log.i("login","empty")
+            if (validateData()) {
+                Log.i("login","validate")
+                var result = loginViewModel.getEmail(email,password)
+                if(result !=null){
+                    editor.putBoolean("login", true)
+                    editor.commit()
+                    Log.i("login",""+email)
+                     Navigation.findNavController(requireView()).navigate(R.id.action_login2_to_nav_home)
+
+                } else{
+                    Log.i("login","fails")
+                    Toast.makeText(requireActivity(),"invalid account", Toast.LENGTH_LONG).show()
                 }
             }
+            else{
+                Log.i("login","invaldata")
+            }
+        }
     }
 }

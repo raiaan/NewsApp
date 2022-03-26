@@ -13,5 +13,9 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="more">read more</string>
+    <string name="addToFav">Favourite</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="no_data_exist">Sorry  something went  wrong while fetching data</string>
     <string name="menu_details">Details</string>
 </resources>

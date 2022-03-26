@@ -1,60 +1,129 @@
 package com.example.myapplication.ui.register
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.myapplication.R
+import android.widget.Button
+import android.widget.EditText
+import android.widget.TextView
+import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
+import com.example.myapplication.*
+import com.example.mydatabaseapp.register.RegisterViewModel
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [register.newInstance] factory method to
- * create an instance of this fragment.
- */
 class Register : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+lateinit var userNameEditText: EditText
+lateinit var emailEditText: EditText
+lateinit var passwordEditText: EditText
+lateinit var phoneNumberEditText: EditText
+lateinit var register:Button
+lateinit var login:TextView
 
+
+lateinit var userName:String
+lateinit var email: String
+lateinit var phoneNumber:String
+lateinit var password:String
+lateinit var registerViewModel: RegisterViewModel
+lateinit var registerViewModelFactory: RegisterViewModelFactory
+lateinit var sharedPreferences: SharedPreferences
+lateinit var editor: SharedPreferences.Editor
+var emptyData:Boolean=true
+    var validateData:Boolean=true
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_register, container, false)
+        var view=inflater.inflate(R.layout.fragment_register,container,false)
+        registerViewModelFactory =
+            RegisterViewModelFactory((requireActivity().application!! as NewsApplication).repository)
+        registerViewModel =
+            ViewModelProvider(this, registerViewModelFactory).get(RegisterViewModel::class.java)
+        return view
+    }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        userNameEditText=view.findViewById(R.id.userNameEdite)
+        emailEditText=view.findViewById(R.id.emailEdite)
+        phoneNumberEditText=view.findViewById(R.id.phoneNumberEdite)
+        register=view.findViewById(R.id.register)
+        login=view.findViewById(R.id.loginreg)
+        login.setOnClickListener {
+            Navigation.findNavController(requireView()).navigate(R.id.action_register2_to_login2)
+        }
+        passwordEditText=view.findViewById(R.id.passwordEdite)
+        sharedPreferences=requireActivity().getSharedPreferences("register",Context.MODE_PRIVATE)
+        editor=sharedPreferences.edit()
+      register.setOnClickListener {
+      register()
+      }
+    }
+    private fun saveDate(){
+        userName=userNameEditText.text.toString().trim()
+        email=emailEditText.text.toString().trim()
+        phoneNumber=phoneNumberEditText.text.toString().trim()
+        password=passwordEditText.text.toString().trim()
+    }
+    private fun checkEmptyData():Boolean{
+        if(userName.isNullOrEmpty()){
+           userNameEditText.error="please fill the field"
+        }
+        else if(password.isNullOrEmpty()){
+            passwordEditText.error="please fill the field"
+        }
+        else if(email.isNullOrEmpty()){
+            emailEditText.error="please fill the field"
+        }
+        else if(phoneNumber.isNullOrEmpty()){
+            phoneNumberEditText.error="please fill the field"
+        }
+        else{
+            emptyData=false
+        }
+        return  emptyData
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment register.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            Register().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    private fun validateData():Boolean{
+        if(!validateEmail(email)){
+            emailEditText.error="invalid email"
+        }
+       else if(!validatePassword(password)){
+            passwordEditText.error="invalid password"
+        }
+        else if(!validatePhone(phoneNumber)){
+            phoneNumberEditText.error="invalid phoneNumber"
+        }
+        else {
+            validateData=false
+        }
+        return validateData
+    }
+    private  fun register() {
+        saveDate()
+        if (!checkEmptyData()) {
+            if (validateData()) {
+                var result = registerViewModel.insert(email,userName,phoneNumber,password)
+                if(result != null){
+                    editor.putBoolean("register", true)
+                    editor.commit()
+                 Navigation.findNavController(requireView()).navigate(R.id.action_register2_to_nav_home)
+                } else{
+
+                    Toast.makeText(requireActivity(),"you already have an account", Toast.LENGTH_LONG).show()
                 }
             }
+        }
     }
 }
+
