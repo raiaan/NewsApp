@@ -10,7 +10,7 @@ import retrofit2.http.Query
 interface RetrofiteService {
     @GET("top-headlines")
     suspend fun allNews(@Query("sortBy", encoded=true) order:String ="publishedAt",
-                        @Query("from") from:String ="2022-02-25",
+                        @Query("from") from:String ="2022-03-01",
                         @Query("country") country:String = "EG",
                                @Query("apiKey", encoded=true) appid:String = apiKey): Response<Json4Kotlin_Base>
     companion object {

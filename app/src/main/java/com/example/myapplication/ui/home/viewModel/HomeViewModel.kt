@@ -20,13 +20,16 @@ class HomeViewModel constructor(private val mainRepository: Repository) : ViewMo
                 if (response.isSuccessful) {
                     mutableLiveData.postValue(response.body())
                     loading.value = false
-                    Log.v("connected" , "${response.body()} ")
                 } else {
-                    Log.v("connected" , "${response.raw()} ")
+                    Log.v("Error","${response.errorBody()?.string()}")
                     onError("Error : ${response.headers()} ")
                 }
             }
         }
+    }
+
+    fun cacheResult(){
+
     }
     private val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
         onError("Exception handled: ${throwable.localizedMessage}")
