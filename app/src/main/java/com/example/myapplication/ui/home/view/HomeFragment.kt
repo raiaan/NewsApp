@@ -20,12 +20,15 @@ class HomeFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var viewModel: HomeViewModel
     private lateinit var viewModelFactory: HomeViewModelFactory
-    private val ArticleDetailCallback :(it:Articles)->Unit=  {it:Articles->
+    private val articleDetailCallback :(it:Articles)->Unit=  {it:Articles->
         val bundle = Bundle()
         bundle.putSerializable("article",it)
         Navigation.findNavController(binding.root).navigate(R.id.action_nav_home_to_details,bundle)
     }
-    private val adapter = ArticleListAdapter(ArticleDetailCallback)
+    private val articleDetailsAddToFav:(it:Articles)->Unit = { it:Articles->
+        viewModel.addToFavourite(it)
+    }
+    private val adapter = ArticleListAdapter(articleDetailCallback, articleDetailsAddToFav)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModelFactory = HomeViewModelFactory((requireContext().applicationContext as NewsApplication).repository)
@@ -37,6 +40,9 @@ class HomeFragment : Fragment() {
         viewModel.articlesLiveData.observe(viewLifecycleOwner) {
             if (it != null) {
                 adapter.articles = it
+            }
+            else{
+                binding.errorBody.visibility = View.VISIBLE
             }
         }
         return binding.root

@@ -32,7 +32,11 @@ class HomeViewModel constructor(private val mainRepository: Repository) : ViewMo
         errorMessage.postValue(message)
         loading.postValue(false)
     }
-
+    fun addToFavourite(articles: Articles){
+        job = CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
+            mainRepository.insertToFavourite(articles)
+        }
+    }
     override fun onCleared() {
         super.onCleared()
         job?.cancel()
