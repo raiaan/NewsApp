@@ -3,6 +3,7 @@ package com.example.myapplication.ui.login
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +13,7 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
 import com.example.myapplication.*
 import com.example.myapplication.ui.register.RegisterViewModelFactory
 import com.example.mydatabaseapp.register.LoginViewModel
@@ -31,7 +33,7 @@ class Login : Fragment() {
     lateinit var sharedPreferences: SharedPreferences
     lateinit var editor: SharedPreferences.Editor
     var emptyData:Boolean=true
-    var validateData:Boolean=true
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -52,27 +54,31 @@ class Login : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         emailEditText=view.findViewById(R.id.emailLogin)
-        register=view.findViewById(R.id.register)
+        register=view.findViewById(R.id.reg)
         login=view.findViewById(R.id.login)
         passwordEditText=view.findViewById(R.id.passwordLogin)
         sharedPreferences=requireActivity().getSharedPreferences("login", Context.MODE_PRIVATE)
         editor=sharedPreferences.edit()
-        register.setOnClickListener {
+       login.setOnClickListener {
+           Log.i("login","loginButton")
             login()
         }
+        register.setOnClickListener {
+            Navigation.findNavController(requireView()).navigate(R.id.action_login2_to_register2)
+        }
     }
-    private fun saveDate(){
+    private fun getDate(){
         email=emailEditText.text.toString().trim()
         password=passwordEditText.text.toString().trim()
     }
     private fun checkEmptyData():Boolean{
-
-        if(password.isNullOrEmpty()){
-            passwordEditText.error="please fill the field"
-        }
-        else if(email.isNullOrEmpty()){
+        if(email.isNullOrEmpty()){
             emailEditText.error="please fill the field"
         }
+       else if(password.isNullOrEmpty()){
+            passwordEditText.error="please fill the field"
+        }
+
         else{
             emptyData=false
         }
@@ -80,30 +86,40 @@ class Login : Fragment() {
     }
 
     private fun validateData():Boolean{
+
         if(!validateEmail(email)){
             emailEditText.error="invalid email"
+         return false
         }
         else if(!validatePassword(password)){
             passwordEditText.error="invalid password"
+            return false
+
         }
-        else {
-            validateData=false
-        }
-        return validateData
+
+        return true
     }
     private fun login() {
-        saveDate()
+        getDate()
+        Log.i("login","savedata")
         if (!checkEmptyData()) {
+            Log.i("login","empty")
             if (validateData()) {
-                var result = loginViewModel.getEmail(email)
-                if(result ==true){
+                Log.i("login","validate")
+                var result = loginViewModel.getEmail(email,password)
+                if(result !=null){
                     editor.putBoolean("login", true)
                     editor.commit()
-                    //   Navigation.findNavController(requireView()).navigate(R.id.action_from_login_to_home)
-                } else{
+                    Log.i("login",""+email)
+                     Navigation.findNavController(requireView()).navigate(R.id.action_login2_to_nav_home)
 
+                } else{
+                    Log.i("login","fails")
                     Toast.makeText(requireActivity(),"invalid account", Toast.LENGTH_LONG).show()
                 }
+            }
+            else{
+                Log.i("login","invaldata")
             }
         }
     }

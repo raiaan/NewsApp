@@ -11,12 +11,12 @@ class Repository( private val newsDao: NewsDao) {
         return retrofitService.allNews()
     }
     suspend fun insertUser(user: User) {
-        return dao.insertUser(user)
+        return newsDao.insertUser(user)
     }
 
-    suspend fun getUseremail(userEmail: String):User?{
+    suspend fun validateUser(userEmail: String,password:String):User?{
 
-        return dao.getUserEmail(userEmail)
+        return newsDao.validateUser(userEmail,password)
     }
     @Suppress("RedundantSuspendModifier")
     @WorkerThread

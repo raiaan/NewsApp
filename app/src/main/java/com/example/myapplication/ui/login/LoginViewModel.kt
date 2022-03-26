@@ -14,11 +14,11 @@ import kotlinx.coroutines.launch
 
 
 class LoginViewModel(val repo:Repository) : ViewModel(){
-     fun getEmail(email:String):Boolean{
+     fun getEmail(email:String,password:String):Boolean{
         var result:Boolean=false
         CoroutineScope(Dispatchers.IO).launch {
 
-           if (repo.getUseremail(email)!=null) {
+           if (repo.validateUser(email,password)!=null) {
                result=true
            }
 

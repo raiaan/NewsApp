@@ -26,4 +26,28 @@
         android:name="com.example.myapplication.ui.slideshow.SlideshowFragment"
         android:label="@string/menu_slideshow"
         tools:layout="@layout/fragment_slideshow" />
+    <fragment
+        android:id="@+id/login2"
+        android:name="com.example.myapplication.ui.login.Login"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_login2_to_nav_home"
+            app:destination="@id/nav_home" />
+        <action
+            android:id="@+id/action_login2_to_register2"
+            app:destination="@id/register2" />
+    </fragment>
+    <fragment
+        android:id="@+id/register2"
+        android:name="com.example.myapplication.ui.register.Register"
+        android:label="fragment_register"
+        tools:layout="@layout/fragment_register" >
+        <action
+            android:id="@+id/action_register2_to_nav_home"
+            app:destination="@id/nav_home" />
+        <action
+            android:id="@+id/action_register2_to_login2"
+            app:destination="@id/login2" />
+    </fragment>
 </navigation>

@@ -56,9 +56,12 @@ var emptyData:Boolean=true
         super.onViewCreated(view, savedInstanceState)
         userNameEditText=view.findViewById(R.id.userNameEdite)
         emailEditText=view.findViewById(R.id.emailEdite)
-        phoneNumberEditText=view.findViewById(R.id.emailEdite)
+        phoneNumberEditText=view.findViewById(R.id.phoneNumberEdite)
         register=view.findViewById(R.id.register)
         login=view.findViewById(R.id.loginreg)
+        login.setOnClickListener {
+            Navigation.findNavController(requireView()).navigate(R.id.action_register2_to_login2)
+        }
         passwordEditText=view.findViewById(R.id.passwordEdite)
         sharedPreferences=requireActivity().getSharedPreferences("register",Context.MODE_PRIVATE)
         editor=sharedPreferences.edit()
@@ -114,7 +117,7 @@ var emptyData:Boolean=true
                 if(result != null){
                     editor.putBoolean("register", true)
                     editor.commit()
-                 //   Navigation.findNavController(requireView()).navigate(R.id.action_from_registration_to_home)
+                 Navigation.findNavController(requireView()).navigate(R.id.action_register2_to_nav_home)
                 } else{
 
                     Toast.makeText(requireActivity(),"you already have an account", Toast.LENGTH_LONG).show()

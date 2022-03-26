@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import com.example.myapplication.data.models.Articles
+import com.example.myapplication.data.models.User
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -12,8 +13,8 @@ interface NewsDao {
     suspend fun insertUser(register: User)
 
 
-    @Query("SELECT * FROM users WHERE email LIKE :email")
-    suspend fun getUserEmail(email: String): User?
+    @Query("SELECT * FROM users WHERE email LIKE :email AND password LIKE:password")
+    suspend fun validateUser(email: String,password:String): User?
     @Query("SELECT * FROM articles ORDER BY publishedAt ASC")
     fun getCachedArticles(): Flow<List<Articles>>
     @Insert
